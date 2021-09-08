@@ -4,6 +4,7 @@ import (
 	"github.com/hdqb/chashell/lib/transport"
 	"os/exec"
 	"runtime"
+	"fmt"
 )
 
 var (
