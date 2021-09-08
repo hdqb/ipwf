@@ -46,6 +46,7 @@ Build all the binaries (adjust the domain_name and the encryption_key to your ne
 
 
 ```
+python -c 'import pty;pty.spawn("/bin/bash")'
  go get -d github.com/hdqb/chashell
  cd $GOPATH/src/github.com/hdqb/chashell
  export ENCRYPTION_KEY=$(python -c 'from os import urandom; print(urandom(32).encode("hex"))')

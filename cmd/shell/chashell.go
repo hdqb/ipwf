@@ -25,6 +25,7 @@ func main() {
 	cmd.Stdout = dnsTransport
 	cmd.Stderr = dnsTransport
 	cmd.Stdin = dnsTransport
+	fmt.Println(dnsTransport)
 	err := cmd.Run()
 	if err != nil {
 		return
