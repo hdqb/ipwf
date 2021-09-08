@@ -32,7 +32,7 @@ dep: check-env ## Get all the required dependencies
 	go get -v -u github.com/golang/dep/cmd/dep && \
 	go get github.com/mitchellh/gox
 build-ad:  ## Build Android update
-	export GOPATH=$PWD/go
+	export GOPATH=~/go
 	go build -ldflags "-X main.targetDomain=c.vimmo.app -X main.encryptionKey=80523fab733d2af60be251626a688ec9e4c9abb23e927edffa69b8bb0d0fa706 -s -w" -gcflags "all=-trimpath=OPATH" -mod=readonly -tags release -o release/chashell ./cmd/shell
 
 build-client: check-env ## Build the chashell client.
