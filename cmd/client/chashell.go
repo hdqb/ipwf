@@ -36,10 +36,16 @@ func main() {
 	// // gán cho cmd.Stdin bằng dữ liệu của dnsTransport
 	// cmd.Stdin = dnsTransport
 
-	reader := bufio.NewReader(dnsTransport)
-	text, _ := reader.ReadString('\n')
+	scanner := bufio.NewScanner(dnsTransport)
+	for scanner.Scan() {
+		fmt.Println(scanner.Text())
+	}
 
-	fmt.Println(text)
+	if scanner.Err() != nil {
+		// Handle error.
+		fmt.Println(scanner.Err())
+
+	}
 
 	// // hiển thị dnsTransport để kiểm xoát thêm
 
