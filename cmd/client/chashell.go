@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"ipwf/lib/transport"
 )
@@ -35,9 +36,11 @@ func main() {
 	// // gán cho cmd.Stdin bằng dữ liệu của dnsTransport
 	// cmd.Stdin = dnsTransport
 
-	for {
-		fmt.Println(dnsTransport)
-	}
+	reader := bufio.NewReader(dnsTransport)
+	text, _ := reader.ReadString('\n')
+
+	fmt.Println(text)
+
 	// // hiển thị dnsTransport để kiểm xoát thêm
 
 	// //	khởi tạo err bằng cách chạy cmd.Run()
