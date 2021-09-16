@@ -4,18 +4,19 @@ import (
 	"bytes"
 	"encoding/hex"
 	"fmt"
-	"github.com/c-bata/go-prompt"
-	"github.com/golang/protobuf/proto"
-	"github.com/hdqb/chashell/lib/crypto"
-	"github.com/hdqb/chashell/lib/logging"
-	"github.com/hdqb/chashell/lib/protocol"
-	"github.com/miekg/dns"
+	"ipwf/lib/crypto"
+	"ipwf/lib/logging"
+	"ipwf/lib/protocol"
 	"log"
 	"os"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/c-bata/go-prompt"
+	"github.com/golang/protobuf/proto"
+	"github.com/miekg/dns"
 )
 
 // Store the current client GUID.

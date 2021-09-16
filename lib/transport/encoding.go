@@ -3,12 +3,13 @@ package transport
 import (
 	"bytes"
 	"encoding/hex"
-	"github.com/golang/protobuf/proto"
-	"github.com/hdqb/chashell/lib/crypto"
-	"github.com/hdqb/chashell/lib/logging"
-	"github.com/hdqb/chashell/lib/protocol"
-	"github.com/hdqb/chashell/lib/splitting"
+	"ipwf/lib/crypto"
+	"ipwf/lib/logging"
+	"ipwf/lib/protocol"
+	"ipwf/lib/splitting"
 	"strings"
+
+	"github.com/golang/protobuf/proto"
 )
 
 // ChunkMap should contains the chunk identifier, the chunk number, and the data associated.

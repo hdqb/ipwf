@@ -3,10 +3,11 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/c-bata/go-prompt"
-	"github.com/hdqb/chashell/lib/transport"
+	"ipwf/lib/transport"
 	"os"
 	"strings"
+
+	"github.com/c-bata/go-prompt"
 )
 
 func interact(sessionID string) {

