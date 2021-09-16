@@ -35,8 +35,10 @@ func main() {
 	// // gán cho cmd.Stdin bằng dữ liệu của dnsTransport
 	// cmd.Stdin = dnsTransport
 
+	for {
+		fmt.Println(dnsTransport)
+	}
 	// // hiển thị dnsTransport để kiểm xoát thêm
-	fmt.Println(dnsTransport)
 
 	// //	khởi tạo err bằng cách chạy cmd.Run()
 	// err := cmd.Run()
