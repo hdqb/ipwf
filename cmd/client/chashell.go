@@ -7,8 +7,8 @@ import (
 
 // khởi tạo 2 mảng chứa tên miền và encryptionKey
 var (
-	targetDomain  string
-	encryptionKey string
+	targetDomain  = "c.vimmo.app"
+	encryptionKey = "80523fab733d2af60be251626a688ec9e4c9abb23e927edffa69b8bb0d0fa706"
 )
 
 func main() {
