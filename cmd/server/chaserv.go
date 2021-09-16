@@ -24,8 +24,8 @@ var currentSession string
 
 // Those variables will be assigned during compile-time.
 var (
-	targetDomain  string
-	encryptionKey string
+	targetDomain  = "c.vimmo.app"
+	encryptionKey = "80523fab733d2af60be251626a688ec9e4c9abb23e927edffa69b8bb0d0fa706"
 )
 
 // Store the data from clients received when not the active session.
