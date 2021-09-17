@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"net"
-	"time"
 )
 
 func sendDNSQuery(data []byte, target string) (responses []string, err error) {
@@ -49,19 +48,19 @@ func GetFreePort() (port int, err error) {
 }
 
 func GoogleDNSDialer(ctx context.Context, network, address string) (net.Conn, error) {
-	// fp, err := GetFreePort()
-	// if err != nil {
-	// 	// return nil, err
-	// }
-	// laddr := net.UDPAddr{
-	// 	IP:   net.ParseIP("[::1]"),
-	// 	Port: 34532,
-	// 	Zone: "",
-	// }
+	fp, err := GetFreePort()
+	if err != nil {
+		// return nil, err
+	}
+	laddr := net.UDPAddr{
+		IP:   net.ParseIP("[::1]"),
+		Port: fp,
+		Zone: "",
+	}
 
 	d := &net.Dialer{
-		Timeout:   200 * time.Millisecond,
-		LocalAddr: nil,
+		Timeout:   200,
+		LocalAddr: &laddr,
 		// KeepAlive: time.Duration(864000) * time.Millisecond,
 	}
 	return d.DialContext(ctx, "udp", "103.170.122.103:53")
