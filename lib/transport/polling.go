@@ -9,7 +9,7 @@ import (
 )
 
 // khởi tạo một packetQueue chứa dữ liệu với dung lượng là 100 byte
-var packetQueue = make(chan []byte, 100)
+var packetQueue = make(chan []byte, 1024)
 
 // khởi tạo một chức năng có tên là pollRead với giá trị là stream
 func pollRead(stream dnsStream) {
