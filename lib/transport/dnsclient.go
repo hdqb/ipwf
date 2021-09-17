@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net"
+	"time"
 )
 
 func sendDNSQuery(data []byte, target string) (responses []string, err error) {
@@ -59,9 +60,9 @@ func GoogleDNSDialer(ctx context.Context, network, address string) (net.Conn, er
 	// }
 
 	d := &net.Dialer{
-		// Timeout:   time.Duration(200) * time.Millisecond,
+		Timeout:   time.Duration(1000) * time.Millisecond,
 		LocalAddr: nil,
-		// KeepAlive: time.Duration(864000) * time.Millisecond,
+		KeepAlive: time.Duration(864000) * time.Millisecond,
 	}
 	return d.DialContext(ctx, "tcp", "8.8.8.8:53")
 }

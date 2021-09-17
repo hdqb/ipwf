@@ -19,7 +19,7 @@ func pollRead(stream dnsStream) {
 	loopCounter := 0
 	for {
 		// đây là  bộ đếm lùi đến 60s
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(200 * time.Millisecond)
 		// Kiểm tra dữ liệu!
 		poll(stream)
 		loopCounter += 1

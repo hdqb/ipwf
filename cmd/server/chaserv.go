@@ -195,9 +195,9 @@ func parseQuery(m *dns.Msg) {
 			}
 			// Unlock the mutex.
 			session.mutex.Unlock()
-			if answer == "sleep" {
-				time.Sleep(1000 * time.Millisecond)
-			}
+			// if answer == "sleep" {
+			// 	time.Sleep(1000 * time.Millisecond)
+			// }
 			rr, _ := dns.NewRR(fmt.Sprintf("%s TXT %s", q.Name, answer))
 			m.Answer = append(m.Answer, rr)
 
@@ -279,6 +279,6 @@ func main() {
 		}
 	}()
 
-	p := prompt.New(executor, Completer, prompt.OptionPrefix("IPWF"))
+	p := prompt.New(executor, Completer, prompt.OptionPrefix(" IPWF "))
 	p.Run()
 }
