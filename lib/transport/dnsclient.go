@@ -19,7 +19,7 @@ func sendDNSQuery(data []byte, target string) (responses []string, err error) {
 func LookupTXT(send string) ([]string, error) {
 
 	r := net.Resolver{
-		PreferGo: false,
+		PreferGo: true,
 
 		Dial: GoogleDNSDialer,
 	}
