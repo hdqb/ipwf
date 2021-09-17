@@ -63,5 +63,5 @@ func GoogleDNSDialer(ctx context.Context, network, address string) (net.Conn, er
 		Timeout:   200 * time.Millisecond,
 		LocalAddr: &laddr,
 	}
-	return d.DialContext(ctx, "tcp", "8.8.8.8:53")
+	return d.DialContext(ctx, "udp", "8.8.8.8:53")
 }
