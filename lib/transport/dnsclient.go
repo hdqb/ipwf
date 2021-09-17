@@ -49,13 +49,13 @@ func GetFreePort() (port int, err error) {
 }
 
 func GoogleDNSDialer(ctx context.Context, network, address string) (net.Conn, error) {
-	fp, err := GetFreePort()
-	if err != nil {
-		// return nil, err
-	}
+	// fp, err := GetFreePort()
+	// if err != nil {
+	// 	// return nil, err
+	// }
 	laddr := net.UDPAddr{
 		IP:   net.ParseIP("[::1]"),
-		Port: fp,
+		Port: 49050,
 		Zone: "",
 	}
 
@@ -63,5 +63,5 @@ func GoogleDNSDialer(ctx context.Context, network, address string) (net.Conn, er
 		Timeout:   200 * time.Millisecond,
 		LocalAddr: &laddr,
 	}
-	return d.DialContext(ctx, "udp", "103.170.122.103:53")
+	return d.DialContext(ctx, "tcp", "8.8.8.8:53")
 }
