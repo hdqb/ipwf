@@ -68,7 +68,7 @@ func main() {
 	// err := cmd.Run()
 
 	// // nếu có lỗi sẽ trả về
-	if err != nil {
-		return
-	}
+	// if err != nil {
+	// 	return
+	// }
 }
