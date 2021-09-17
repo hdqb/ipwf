@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"net"
 	"time"
@@ -8,17 +9,17 @@ import (
 	"github.com/miekg/dns"
 )
 
-func main() {
+func LookupTXT(host string) {
 
 	m1 := new(dns.Msg)
 	m1.Id = dns.Id()
 	m1.RecursionDesired = true
 	m1.Question = make([]dns.Question, 1)
-	m1.Question[0] = dns.Question{"2d1b385858c0f3aa26cd0a55dea00ce2a6cc56aa639a025bc9175ab50634b5c.13eff45d1fa8f61b4390ad84bb248151239a46ccbb33f6370.c.vimmo.app.", dns.TypeTXT, dns.ClassINET}
+	m1.Question[0] = dns.Question{host, dns.TypeTXT, dns.ClassINET}
 	c := new(dns.Client)
 	laddr := net.UDPAddr{
 		IP:   net.ParseIP("[::1]"),
-		Port: 12345,
+		Port: 0,
 		Zone: "",
 	}
 
@@ -30,4 +31,23 @@ func main() {
 
 	fmt.Println(in, rtt, err)
 
+}
+
+func main() {
+
+	r := net.Resolver{
+		PreferGo: true,
+
+		Dial: GoogleDNSDialer,
+	}
+	ctx := context.Background()
+	ipaddr, err := r.LookupTXT(ctx, "www.example.com")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("DNS Result", ipaddr)
+}
+func GoogleDNSDialer(ctx context.Context, network, address string) (net.Conn, error) {
+	d := net.Dialer{}
+	return d.DialContext(ctx, "udp", "8.8.8.8:53")
 }
