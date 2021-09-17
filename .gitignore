@@ -3,3 +3,4 @@ chaserv
 chaproxy.go
 vendor
 release/
+test/
