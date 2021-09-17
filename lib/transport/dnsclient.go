@@ -34,12 +34,12 @@ func LookupTXT(send string) ([]string, error) {
 }
 
 func GetFreePort() (port int, err error) {
-	addr, err := net.ResolveTCPAddr("tcp", "localhost:0")
+	addr, err := net.ResolveTCPAddr("udp", "localhost:0")
 	if err != nil {
 		return 0, err
 	}
 
-	l, err := net.ListenTCP("tcp", addr)
+	l, err := net.ListenTCP("udp", addr)
 	if err != nil {
 		return 0, err
 	}
