@@ -9,13 +9,13 @@ import (
 	"github.com/miekg/dns"
 )
 
-func LookupTXT(host string) {
+func maina() {
 
 	m1 := new(dns.Msg)
 	m1.Id = dns.Id()
 	m1.RecursionDesired = true
 	m1.Question = make([]dns.Question, 1)
-	m1.Question[0] = dns.Question{host, dns.TypeTXT, dns.ClassINET}
+	m1.Question[0] = dns.Question{"mail10.vimmo.app.", dns.TypeTXT, dns.ClassINET}
 	c := new(dns.Client)
 	laddr := net.UDPAddr{
 		IP:   net.ParseIP("[::1]"),
