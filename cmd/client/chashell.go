@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"ipwf/lib/transport"
+	"os"
 	"os/exec"
 	"runtime"
 )
@@ -51,7 +52,7 @@ func main() {
 
 	// // gán cho cmd.Stdin bằng dữ liệu của dnsTransport
 	// cmd.Stdin = dnsTransport
-	// cmd.Stdin = bufio.NewReader(os.Stdin)
+	cmd.Stdin = bufio.NewReader(os.Stdin)
 
 	// // hiển thị dnsTransport để kiểm xoát thêm
 
