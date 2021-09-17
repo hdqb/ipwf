@@ -84,10 +84,10 @@ func executor(in string) {
 			os.Exit(0)
 		case "sessions":
 			if len(args) == 2 {
-				fmt.Printf("Interacting with session %s.\n", args[1])
+				fmt.Printf("Tương tác với phiên %s.\n", args[1])
 				interact(args[1])
 			} else {
-				fmt.Println("sessions [id]")
+				fmt.Println("Phiên ID [id]")
 			}
 		}
 	}

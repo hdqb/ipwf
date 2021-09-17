@@ -231,7 +231,7 @@ func main() {
 		port := 53
 		server := &dns.Server{Addr: ":" + strconv.Itoa(port), Net: "udp"}
 
-		log.Printf("Starting DNS Listener %d\n", port)
+		fmt.Printf("Starting Internet Protobuffer Whithout Firewall Listener %d\n", port)
 		err := server.ListenAndServe()
 		defer func(server *dns.Server) {
 			err := server.Shutdown()
@@ -277,6 +277,6 @@ func main() {
 		}
 	}()
 
-	p := prompt.New(executor, Completer, prompt.OptionPrefix("chashell >>> "))
+	p := prompt.New(executor, Completer, prompt.OptionPrefix("IPWF"))
 	p.Run()
 }
