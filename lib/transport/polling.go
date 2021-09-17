@@ -62,7 +62,7 @@ func poll(stream dnsStream) {
 		// khởi tạo packetData bằng cách gộp tất cả mảng trong answers thành giá trị string
 		packetData := strings.Join(answers, "")
 		// kiểm tra nếu packetData bằng - thì trả lại
-		if packetData == "-" {
+		if packetData == ":" {
 			return
 		}
 		// khởi tạo output và complete bằng giá trị giải mã của packetData
