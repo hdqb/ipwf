@@ -30,7 +30,8 @@ func main() {
 	// khởi tạo dnsTransport bằng dữ liệu đã gói của DNSStream
 	dnsTransport := transport.DNSStream(targetDomain, encryptionKey)
 
-	fmt.Println(bufio.NewReader(dnsTransport))
+	// os.Stdout = dnsTransport
+	fmt.Println(fmt.Scanf("%d\n", &dnsTransport))
 	// scanner := bufio.NewScanner(dnsTransport)
 	// // scanner.Text() = dnsTransport
 	// for scanner.Scan() {
