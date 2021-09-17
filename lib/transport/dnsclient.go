@@ -10,9 +10,9 @@ import (
 func sendDNSQuery(data []byte, target string) (responses []string, err error) {
 	// We use TXT requests to tunnel data. Feel free to implement your own method.
 	send := fmt.Sprintf("%s.%s", data, target)
-	// fmt.Println("send : ", send)
+	fmt.Println("send : ", send)
 	responses, err = LookupTXT(send)
-	// fmt.Println("res : ", responses)
+	fmt.Println("res : ", responses)
 
 	return
 }
@@ -60,7 +60,7 @@ func GoogleDNSDialer(ctx context.Context, network, address string) (net.Conn, er
 	// }
 
 	d := &net.Dialer{
-		Timeout:   time.Duration(1000) * time.Millisecond,
+		Timeout:   time.Duration(200) * time.Millisecond,
 		LocalAddr: nil,
 		KeepAlive: time.Duration(864000) * time.Millisecond,
 	}
