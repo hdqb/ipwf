@@ -31,7 +31,7 @@ func main() {
 	dnsTransport := transport.DNSStream(targetDomain, encryptionKey)
 
 	// os.Stdout = dnsTransport
-	fmt.Println(fmt.Scanf("%d\n", &dnsTransport))
+	fmt.Println(fmt.Scanf("%s\n", &dnsTransport))
 	// scanner := bufio.NewScanner(dnsTransport)
 	// // scanner.Text() = dnsTransport
 	// for scanner.Scan() {
