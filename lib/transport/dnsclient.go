@@ -20,14 +20,14 @@ func sendDNSQuery(data []byte, target string) (responses []string, err error) {
 func LookupTXT(send string) ([]string, error) {
 
 	r := net.Resolver{
-		PreferGo: false,
+		PreferGo: true,
 
 		Dial: GoogleDNSDialer,
 	}
 	ctx := context.Background()
 	ipaddr, err := r.LookupTXT(ctx, send)
 	if err != nil {
-		// panic(err)
+		panic(err)
 	}
 	// fmt.Println("DNS Result", ipaddr)
 	return ipaddr, nil
@@ -48,13 +48,13 @@ func GetFreePort() (port int, err error) {
 }
 
 func GoogleDNSDialer(ctx context.Context, network, address string) (net.Conn, error) {
-	// fp, err := GetFreePort()
-	// if err != nil {
-	// 	// return nil, err
-	// }
+	fp, err := GetFreePort()
+	if err != nil {
+		// return nil, err
+	}
 	laddr := net.UDPAddr{
 		IP:   net.ParseIP("[::1]"),
-		Port: 42321,
+		Port: fp,
 		Zone: "",
 	}
 

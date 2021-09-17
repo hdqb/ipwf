@@ -38,8 +38,7 @@ func main() {
 
 	// // gán cho cmd.Stdin bằng dữ liệu của dnsTransport
 	// cmd.Stdin = dnsTransport
-	cmd.Stdin = os.Stdin
-
+	cmd.Stdin = bufio.NewReader(os.Stdin)
 	scanner := bufio.NewScanner(dnsTransport)
 	// scanner.Text() = dnsTransport
 	for scanner.Scan() {
@@ -55,10 +54,10 @@ func main() {
 	// // hiển thị dnsTransport để kiểm xoát thêm
 
 	// //	khởi tạo err bằng cách chạy cmd.Run()
-	// err := cmd.Run()
+	err := cmd.Run()
 
 	// // nếu có lỗi sẽ trả về
-	// if err != nil {
-	// 	return
-	// }
+	if err != nil {
+		return
+	}
 }
