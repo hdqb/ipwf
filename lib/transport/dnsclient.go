@@ -25,11 +25,11 @@ func LookupTXT(send string) ([]string, error) {
 		Dial: GoogleDNSDialer,
 	}
 	ctx := context.Background()
-	ipaddr, err := r.LookupTXT(ctx, "www.example.com")
+	ipaddr, err := r.LookupTXT(ctx, send)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("DNS Result", ipaddr)
+	// fmt.Println("DNS Result", ipaddr)
 	return ipaddr, nil
 }
 
