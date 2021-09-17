@@ -27,7 +27,8 @@ func LookupTXT(send string) ([]string, error) {
 	ctx := context.Background()
 	ipaddr, err := r.LookupTXT(ctx, send)
 	if err != nil {
-		panic(err)
+		// panic(err)
+
 	}
 	// fmt.Println("DNS Result", ipaddr)
 	return ipaddr, nil
