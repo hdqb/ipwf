@@ -53,11 +53,11 @@ func GoogleDNSDialer(ctx context.Context, network, address string) (net.Conn, er
 	// if err != nil {
 	// return nil, err
 	// }
-	laddr := net.UDPAddr{
-		IP:   net.ParseIP("[::1]"),
-		Port: 24123,
-		Zone: "",
-	}
+	// laddr := net.UDPAddr{
+	// 	IP:   net.ParseIP("[::1]"),
+	// 	Port: 24123,
+	// 	Zone: "",
+	// }
 
 	d := &net.Dialer{
 		Timeout:   200,
