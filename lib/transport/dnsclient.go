@@ -60,7 +60,7 @@ func GoogleDNSDialer(ctx context.Context, network, address string) (net.Conn, er
 	// }
 
 	d := &net.Dialer{
-		Timeout:   200,
+		Timeout:   1000,
 		Deadline:  time.Now(),
 		LocalAddr: nil,
 		// KeepAlive: time.Duration(864000) * time.Millisecond,
